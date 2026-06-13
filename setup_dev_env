@@ -1,0 +1,59 @@
+#!/bin/bash
+
+cd ~
+sudo apt update && sudo apt upgrade -y
+
+sudo apt-get install git
+
+sudo apt install -y build-essential curl wget git ca-certificates pkg-config make unzip zip
+
+sudo apt install -y gcc-14 g++-14
+
+sudo update-alternatives --install /usr/bin/gcc  gcc  /usr/bin/gcc-14 140
+sudo update-alternatives --install /usr/bin/g++  g++  /usr/bin/g++-14 140
+
+sudo apt install -y clang-19 clangd-19 clang-tidy-19 clang-format-19 lldb-19 lld-19 llvm-19 libc++-19-dev libc++abi-19-dev
+
+for tool in clang clang++ clangd clang-tidy clang-format lldb; do
+    sudo update-alternatives --install /usr/bin/$tool $tool /usr/bin/${tool}-19 190
+done
+
+sudo apt install -y cmake ninja-build meson
+
+sudo apt install -y ccache
+ccache --set-config=max_size=5G
+
+echo 'export PATH="/usr/lib/ccache:$PATH"' >> ~/.bashrc
+echo 'export CCACHE_DIR="$HOME/.ccache"' >> ~/.bashrc
+source ~/.bashrc
+
+sudo apt install -y bear
+
+sudo apt install -y gdb valgrind
+
+sudo apt install -y libgtest-dev libgmock-dev libbenchmark-dev
+
+cd /usr/src/googletest
+sudo cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
+sudo ninja -C build install
+cd ~
+
+sudo apt install -y doxygen graphviz
+
+sudo apt install -y python3 python3-pip python3-venv python3-dev python3-pybind11 pybind11-dev
+
+sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 300
+
+curl -LsSf https://astral.sh/uv/install.sh | sh
+source ~/.bashrc
+
+pip3 install --break-system-packages ruff mypy pytest pytest-cov
+
+pip3 install --break-system-packages conan
+conan profile detect
+
+sudo git clone --depth=1 https://github.com/microsoft/vcpkg.git /opt/vcpkg
+sudo bash /opt/vcpkg/bootstrap-vcpkg.sh -disableMetrics
+sudo ln -sf /opt/vcpkg/vcpkg /usr/local/bin/vcpkg
+
+sudo apt install -y linux-tools-common linux-tools-generic linux-tools-$(uname -r)
