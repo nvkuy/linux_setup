@@ -1,14 +1,5 @@
 # Linux setup
 
-## Bash
-In `~/.bashrc` add this:
-```bash
-if [ -f ~/.bashrc.user ]; then
-    . ~/.bashrc.user
-fi
-```
-Then add `~/.bashrc.user` and source all.
-
 ## Basic
  - lib/compiler/lsp/build
  - ibus

@@ -57,3 +57,6 @@ sudo bash /opt/vcpkg/bootstrap-vcpkg.sh -disableMetrics
 sudo ln -sf /opt/vcpkg/vcpkg /usr/local/bin/vcpkg
 
 sudo apt install -y linux-tools-common linux-tools-generic linux-tools-$(uname -r)
+
+sudo apt install ripgrep
+
